@@ -8,6 +8,10 @@ Gully Stars is a mobile-first web platform for grassroots sports teams. It combi
 
 ---
 
+https://drive.google.com/file/d/1ZOjzhoTAfcQ6IYhYdxT_GZPn_liRRl5Q/view?usp=sharing
+
+https://github.com/akash8534/assin00
+
 ## 🛠 Tech Stack & Justification
 
 * **Framework:** **Next.js (App Router)**
