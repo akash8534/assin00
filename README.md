@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Here’s a cleaner, corrected, and slightly tighter version of your doc. I’ve removed citation noise, fixed grammar, and improved flow. I also added a couple of missing pieces that reviewers usually expect.
 
-## Getting Started
+---
 
-First, run the development server:
+# 🌟 Gully Stars – Grassroots Sports Platform
+
+Gully Stars is a mobile-first web platform for grassroots sports teams. It combines sports management with social features, enabling captains to manage squads, organisers to run tournaments, and players to track their performance and memories.
+
+---
+
+## 🛠 Tech Stack & Justification
+
+* **Framework:** **Next.js (App Router)**
+  Chosen for fast full-stack development, built-in API routes, and seamless server–client rendering.
+
+* **Database:** **Prisma ORM + SQLite**
+  Ensures a zero-config local setup. SQLite allows the app to run instantly without external dependencies like Docker or Postgres.
+
+* **Styling:** **Tailwind CSS**
+  Used to build a clean, responsive UI optimized for a **390px mobile viewport**.
+
+* **State Management:** **React Context API**
+  Lightweight solution for handling global state and mock authentication without added complexity.
+
+---
+
+## ⚙️ Local Development Setup (Under 5 Minutes)
+
+### Prerequisites
+
+* **Node.js** (v18 or higher)
+* **npm**
+
+### 1. Environment Setup
+
+Create a `.env` file in the root directory:
+
+```bash
+echo 'DATABASE_URL="file:./dev.db"' > .env
+```
+
+Or copy from example:
+
+```bash
+cp .env.example .env
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Setup Database
+
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+### 4. Run the App
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+App will be available at:
+👉 [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✅ (Recommended to Add — Often Expected in Assignments)
 
-## Learn More
+If your assignment requires completeness, you might still need these sections:
 
-To learn more about Next.js, take a look at the following resources:
+### 📦 Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* Team creation and management
+* Player profiles
+* Match/tournament organisation
+* Performance tracking
+* Social feed / highlights
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📁 Project Structure 
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+/app        → Routes & pages (Next.js App Router)
+/components → Reusable UI components
+/lib        → Utilities & configs
+/prisma     → Database schema
+```
