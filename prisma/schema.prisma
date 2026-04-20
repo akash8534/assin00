@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id     String  @id @default(cuid())
+  name   String
+  role   String  // PLAYER, CAPTAIN, ORGANISER, FAN
+  
+  teamId String?
+  team   Team?   @relation("TeamPlayers", fields: [teamId], references: [id])
+  rsvps  RSVP[]
+  joinRequests JoinRequest[] // NEW: Link user to requests
+}
+
+model Team {
+  id        String   @id @default(cuid())
+  name      String
+  sport     String   // FOOTBALL, CRICKET, BASKETBALL
+  captainId String
+  
+  players   User[]   @relation("TeamPlayers")
+  matches   Match[]
+  posts     Post[]
+  joinRequests JoinRequest[] // NEW: Link team to requests
+}
+
+// NEW: The Join Request System
+model JoinRequest {
+  id        String   @id @default(cuid())
+  userId    String
+  teamId    String
+  status    String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+  team      Team     @relation(fields: [teamId], references: [id])
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  teamId    String
+  content   String
+  mediaUrl  String?  
+  mediaType String?  
+  location  String?   
+  likes     Int      @default(0)
+  createdAt DateTime @default(now())
+  
+  team      Team     @relation(fields: [teamId], references: [id])
+  comments  Comment[] 
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  text      String
+  postId    String
+  userId    String   
+  userName  String   
+  createdAt DateTime @default(now())
+  
+  post      Post     @relation(fields: [postId], references: [id])
+}
+
+model Match {
+  id         String   @id @default(cuid())
+  teamId     String
+  opponent   String
+  date       DateTime
+  location   String?
+  isTraining Boolean  @default(false)
+  score      String?  
+  createdAt  DateTime @default(now())
+  
+  team       Team     @relation(fields: [teamId], references: [id])
+  rsvps      RSVP[]
+}
+
+model RSVP {
+  id      String @id @default(cuid())
+  matchId String
+  userId  String
+  status  String 
+  
+  match   Match  @relation(fields: [matchId], references: [id])
+  user    User   @relation(fields: [userId], references: [id])
+
+  @@unique([matchId, userId]) 
+}
+model Tournament {
+  id          String   @id @default(cuid())
+  name        String
+  organiserId String
+  status      String   @default("OPEN") // OPEN, ACTIVE, COMPLETED
+  createdAt   DateTime @default(now())
+  
+  applications TournamentApp[]
+}
+
+model TournamentApp {
+  id           String @id @default(cuid())
+  tournamentId String
+  teamId       String
+  status       String @default("PENDING") // PENDING, APPROVED
+  
+  tournament   Tournament @relation(fields: [tournamentId], references: [id])
+  team         Team       @relation(fields: [teamId], references: [id])
+
+  @@unique([tournamentId, teamId]) // A team can only apply once
+}
